@@ -1,0 +1,28 @@
+html
+  head
+    title dpkgstatus - #{name}
+  body
+    p Name: 
+    p(style='margin-left:40') #{name}
+    if descriptionLines
+      p Description:
+      p(style='white-space:pre; margin-left:40')
+        for descriptionLine in descriptionLines 
+          | #{descriptionLine}
+          |
+    if dependencies || dependenciesNotInList
+      p Dependencies:
+      ul
+        if dependencies
+          for dependency in dependencies
+            li
+              a(href=dependency + ".html")=dependency
+        if dependenciesNotInList
+          for dependency in dependenciesNotInList
+            li #{dependency}
+    if packagesDependOnThis
+      p Packages that depend on this package:
+      ul
+        for dependency in packagesDependOnThis
+          li
+            a(href=dependency + ".html")=dependency

@@ -1,0 +1,8 @@
+html
+  head
+    title dpkgstatus
+  body
+    ol
+      for packageName in packageNames
+        li
+          a(href="pkg/" + packageName + ".html")=packageName
