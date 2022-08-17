@@ -1,6 +1,6 @@
 # dpkgstatus
 
-* Compile: `npm compile` 
+* Compile: `npm run compile` 
 * Test: `npm test`
 * Run: `npm start`
 
