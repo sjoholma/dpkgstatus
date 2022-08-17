@@ -14,14 +14,17 @@ export const readPackages = async () => {
     throw '.env FILENAME missing';
   }
 
-  await readFile(filenameWithPath);
+  readFileAndSetPackages(filenameWithPath);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  fs.watch(filenameWithPath, async (_event, _filename) => {
+  fs.watch(filenameWithPath, async () => {
     if (fs.existsSync(filenameWithPath)) {
-      readFile(filenameWithPath);
+      readFileAndSetPackages(filenameWithPath);
     }
   });
+};
+
+const readFileAndSetPackages = async (filenameWithPath: string) => {
+  setPackages(await readFile(filenameWithPath));
 };
 
 const readFile = async (filename: string) => {
@@ -32,6 +35,10 @@ const readFile = async (filename: string) => {
     crlfDelay: Infinity,
   });
 
+  return await parseFile(rl);
+};
+
+const parseFile = async (rl: readline.Interface) => {
   const pkgs: Packages = {};
   let pkg: Package | undefined = undefined;
 
@@ -68,5 +75,5 @@ const readFile = async (filename: string) => {
     }
   }
 
-  setPackages(pkgs);
+  return pkgs;
 };
